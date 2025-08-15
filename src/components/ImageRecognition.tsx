@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,10 +77,10 @@ const ImageRecognition = () => {
     try {
       console.log("Starting image analysis...");
       
-      // Use a smaller, more reliable model for browser usage
+      // Use Google's MobileNetV2 model that's publicly available
       const classifier = await pipeline(
         'image-classification',
-        'Xenova/mobilenet_v2_1.0_224'
+        'google/mobilenet_v2_1.0_224'
       );
 
       console.log("Pipeline created, analyzing image...");
