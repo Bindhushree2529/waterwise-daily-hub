@@ -76,10 +76,10 @@ const ImageRecognition = () => {
     try {
       console.log("Starting image analysis...");
       
-      // Create image classification pipeline with a more suitable model
+      // Use a smaller, more reliable model for browser usage
       const classifier = await pipeline(
         'image-classification',
-        'Xenova/vit-base-patch16-224'
+        'Xenova/mobilenet_v2_1.0_224'
       );
 
       console.log("Pipeline created, analyzing image...");
