@@ -74,20 +74,25 @@ const ImageRecognition = () => {
 
     setIsAnalyzing(true);
     try {
-      // Create image classification pipeline
+      console.log("Starting image analysis...");
+      
+      // Create image classification pipeline with a more suitable model
       const classifier = await pipeline(
         'image-classification',
-        'microsoft/resnet-50',
-        { device: 'webgpu' }
+        'Xenova/vit-base-patch16-224'
       );
 
+      console.log("Pipeline created, analyzing image...");
+      
       // Classify the image
       const results = await classifier(selectedImage) as RecognitionResult[];
+      console.log("Analysis results:", results);
+      
       setRecognitionResult(results.slice(0, 3)); // Show top 3 results
       toast.success("Image analyzed successfully!");
     } catch (error) {
       console.error('Error analyzing image:', error);
-      toast.error("Failed to analyze image. Please try again.");
+      toast.error(`Failed to analyze image: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsAnalyzing(false);
     }
