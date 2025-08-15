@@ -77,10 +77,10 @@ const ImageRecognition = () => {
     try {
       console.log("Starting image analysis...");
       
-      // Use Google's MobileNetV2 model that's publicly available
+      // Use onnx-community MobileNetV4 model that's verified to work in browsers
       const classifier = await pipeline(
         'image-classification',
-        'google/mobilenet_v2_1.0_224'
+        'onnx-community/mobilenetv4_conv_small.e2400_r224_in1k'
       );
 
       console.log("Pipeline created, analyzing image...");
