@@ -57,6 +57,70 @@ export const waterFootprintData: WaterFootprintItem[] = [
     unit: "100g bar",
     fact: "A chocolate bar requires massive amounts of water mainly for growing cocoa beans. Cocoa trees need consistent rainfall and irrigation."
   },
+  {
+    id: 16,
+    name: "Cup of Rice",
+    category: "food",
+    liters: 150,
+    unit: "cup (cooked)",
+    fact: "Rice is one of the thirstiest crops. A cup of cooked rice needs about 150 liters of water to grow, as rice fields are typically flooded during cultivation."
+  },
+  {
+    id: 17,
+    name: "Chicken Breast",
+    category: "food",
+    liters: 500,
+    unit: "100g",
+    fact: "Chicken requires significantly less water than beef - about 500 liters per 100g. This includes water for drinking, feed crops, and processing."
+  },
+  {
+    id: 18,
+    name: "Cup of Tea",
+    category: "food",
+    liters: 27,
+    unit: "cup",
+    fact: "A cup of tea needs about 27 liters of water to produce, making it much more water-efficient than coffee. Most water goes into growing the tea leaves."
+  },
+  {
+    id: 19,
+    name: "Banana",
+    category: "food",
+    liters: 18,
+    unit: "banana",
+    fact: "Bananas are relatively water-efficient fruits, requiring only 18 liters per banana. They're a great sustainable choice for fruit lovers."
+  },
+  {
+    id: 20,
+    name: "Tomato",
+    category: "food",
+    liters: 25,
+    unit: "tomato",
+    fact: "Fresh tomatoes need about 25 liters of water each to grow. Greenhouse tomatoes typically use even more water due to controlled growing conditions."
+  },
+  {
+    id: 21,
+    name: "Egg",
+    category: "food",
+    liters: 135,
+    unit: "egg",
+    fact: "One egg requires about 135 liters of water to produce, including water for the hen to drink and for growing feed crops like corn and soy."
+  },
+  {
+    id: 22,
+    name: "Slice of Cheese",
+    category: "food",
+    liters: 50,
+    unit: "slice (20g)",
+    fact: "Cheese is water-intensive like other dairy products. A single slice requires about 50 liters of water for milk production and processing."
+  },
+  {
+    id: 23,
+    name: "Orange",
+    category: "food",
+    liters: 50,
+    unit: "orange",
+    fact: "An orange needs about 50 liters of water to grow. Citrus fruits require consistent irrigation, especially in warmer climates."
+  },
   
   // Clothing items
   {

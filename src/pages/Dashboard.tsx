@@ -5,10 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Droplets, Leaf, LogOut, Lightbulb, Camera } from "lucide-react";
+import { Search, Droplets, Leaf, LogOut, Lightbulb, Camera, BarChart3, Users } from "lucide-react";
 import waterWiseLogo from "@/assets/waterwise-logo.png";
 import { waterFootprintData } from "@/data/waterFootprintData";
 import ImageRecognition from "@/components/ImageRecognition";
+import WaterTracker from "@/components/WaterTracker";
+import WaterSavingSuggestions from "@/components/WaterSavingSuggestions";
+import CommunityDashboard from "@/components/CommunityDashboard";
 
 interface DashboardProps {
   user: string;
@@ -19,6 +22,12 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedItem, setSelectedItem] = useState<typeof waterFootprintData[0] | null>(null);
+  
+  // Water tracker state
+  const [dailyUsage, setDailyUsage] = useState(300);
+  const [showers, setShowers] = useState(1);
+  const [buckets, setBuckets] = useState(3);
+  const [bottles, setBottles] = useState(2);
 
   const categories = ["all", "food", "clothing", "electronics"];
 
@@ -59,9 +68,12 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
 
       <div className="max-w-6xl mx-auto p-6">
         <Tabs defaultValue="search" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="grid w-full grid-cols-5 mb-6">
             <TabsTrigger value="search">Search Items</TabsTrigger>
             <TabsTrigger value="camera">AI Recognition</TabsTrigger>
+            <TabsTrigger value="tracker">Usage Tracker</TabsTrigger>
+            <TabsTrigger value="suggestions">Save Water</TabsTrigger>
+            <TabsTrigger value="community">Community</TabsTrigger>
           </TabsList>
           
           <TabsContent value="search">
@@ -220,6 +232,29 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
           <TabsContent value="camera">
             <div className="max-w-4xl mx-auto">
               <ImageRecognition />
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="tracker">
+            <div className="max-w-6xl mx-auto">
+              <WaterTracker />
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="suggestions">
+            <div className="max-w-6xl mx-auto">
+              <WaterSavingSuggestions 
+                dailyUsage={dailyUsage}
+                showers={showers}
+                buckets={buckets}
+                bottles={bottles}
+              />
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="community">
+            <div className="max-w-6xl mx-auto">
+              <CommunityDashboard />
             </div>
           </TabsContent>
         </Tabs>
