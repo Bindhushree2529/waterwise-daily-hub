@@ -21,6 +21,7 @@ interface TrackerData {
   showers: number;
   buckets: number;
   bottles: number;
+  bodyWeight: number;
 }
 
 interface WaterTrackerProps {
@@ -31,7 +32,8 @@ const WaterTracker = ({ onUpdate }: WaterTrackerProps) => {
   const [usage, setUsage] = useState<TrackerData>({
     showers: 1,
     buckets: 3,
-    bottles: 2
+    bottles: 2,
+    bodyWeight: 70 // Default weight in kg
   });
 
   const [weeklyData, setWeeklyData] = useState<DailyUsage[]>([]);
@@ -118,7 +120,7 @@ const WaterTracker = ({ onUpdate }: WaterTrackerProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label htmlFor="showers">Showers per day</Label>
               <Input
@@ -160,6 +162,61 @@ const WaterTracker = ({ onUpdate }: WaterTrackerProps) => {
               />
               <p className="text-xs text-muted-foreground">~{BOTTLE_LITERS}L each</p>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="bodyWeight">Body Weight (kg)</Label>
+              <Input
+                id="bodyWeight"
+                type="number"
+                min="30"
+                max="200"
+                value={usage.bodyWeight}
+                onChange={(e) => setUsage({...usage, bodyWeight: parseInt(e.target.value) || 70})}
+                className="text-center"
+              />
+              <p className="text-xs text-muted-foreground">For hydration calc</p>
+            </div>
+          </div>
+
+          {/* Hydration Recommendation */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950 dark:to-cyan-950 p-4 rounded-lg">
+            <div className="flex items-center gap-3 mb-3">
+              <Droplets className="w-5 h-5 text-blue-600" />
+              <h3 className="font-semibold text-blue-700 dark:text-blue-300">Daily Hydration Needs</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  {(usage.bodyWeight * 0.035).toFixed(1)}L
+                </div>
+                <div className="text-sm text-muted-foreground">Recommended intake</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
+                  {usage.bottles}L
+                </div>
+                <div className="text-sm text-muted-foreground">Current drinking</div>
+              </div>
+              <div className="text-center">
+                <div className={`text-2xl font-bold ${
+                  usage.bottles >= (usage.bodyWeight * 0.035) 
+                    ? 'text-green-600 dark:text-green-400' 
+                    : 'text-red-600 dark:text-red-400'
+                }`}>
+                  {usage.bottles >= (usage.bodyWeight * 0.035) ? '✓' : '✗'}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {usage.bottles >= (usage.bodyWeight * 0.035) ? 'Well hydrated!' : 'Need more water!'}
+                </div>
+              </div>
+            </div>
+            {usage.bottles < (usage.bodyWeight * 0.035) && (
+              <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-950 rounded-lg">
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  💡 You need {((usage.bodyWeight * 0.035) - usage.bottles).toFixed(1)}L more water daily for optimal hydration!
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Water Usage Summary */}
