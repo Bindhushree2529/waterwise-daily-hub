@@ -29,6 +29,14 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
   const [buckets, setBuckets] = useState(3);
   const [bottles, setBottles] = useState(2);
 
+  // Handle updates from WaterTracker
+  const handleTrackerUpdate = (usage: { showers: number; buckets: number; bottles: number; dailyTotal: number }) => {
+    setShowers(usage.showers);
+    setBuckets(usage.buckets);
+    setBottles(usage.bottles);
+    setDailyUsage(usage.dailyTotal);
+  };
+
   const categories = ["all", "food", "clothing", "electronics"];
 
   const filteredItems = waterFootprintData.filter(item => {
@@ -237,7 +245,7 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
           
           <TabsContent value="tracker">
             <div className="max-w-6xl mx-auto">
-              <WaterTracker />
+              <WaterTracker onUpdate={handleTrackerUpdate} />
             </div>
           </TabsContent>
           

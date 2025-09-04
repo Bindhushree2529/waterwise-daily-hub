@@ -23,7 +23,11 @@ interface TrackerData {
   bottles: number;
 }
 
-const WaterTracker = () => {
+interface WaterTrackerProps {
+  onUpdate?: (usage: { showers: number; buckets: number; bottles: number; dailyTotal: number }) => void;
+}
+
+const WaterTracker = ({ onUpdate }: WaterTrackerProps) => {
   const [usage, setUsage] = useState<TrackerData>({
     showers: 1,
     buckets: 3,
@@ -44,6 +48,18 @@ const WaterTracker = () => {
     calculateTotals();
     generateWeeklyData();
   }, [usage]);
+
+  useEffect(() => {
+    // Notify parent component of usage updates
+    if (onUpdate) {
+      onUpdate({
+        showers: usage.showers,
+        buckets: usage.buckets,
+        bottles: usage.bottles,
+        dailyTotal: dailyTotal
+      });
+    }
+  }, [usage, dailyTotal, onUpdate]);
 
   const calculateTotals = () => {
     const daily = (usage.showers * SHOWER_LITERS) + 
