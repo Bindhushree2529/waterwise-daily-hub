@@ -7,12 +7,13 @@ import { useState, useEffect } from "react";
 import Splash from "./pages/Splash";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState<"splash" | "login" | "dashboard">("splash");
+  const [currentPage, setCurrentPage] = useState<"splash" | "login" | "dashboard" | "admin">("splash");
   const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,6 +31,11 @@ const App = () => {
     setCurrentPage("dashboard");
   };
 
+  const handleAdminLogin = () => {
+    setUser("admin");
+    setCurrentPage("admin");
+  };
+
   const handleLogout = () => {
     setUser(null);
     setCurrentPage("login");
@@ -41,10 +47,11 @@ const App = () => {
         <Toaster />
         <Sonner />
         {currentPage === "splash" && <Splash />}
-        {currentPage === "login" && <Login onLogin={handleLogin} />}
+        {currentPage === "login" && <Login onLogin={handleLogin} onAdminLogin={handleAdminLogin} />}
         {currentPage === "dashboard" && user && (
           <Dashboard user={user} onLogout={handleLogout} />
         )}
+        {currentPage === "admin" && <Admin onLogout={handleLogout} />}
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -6,15 +6,21 @@ import waterWiseLogo from "@/assets/waterwise-logo.png";
 
 interface LoginProps {
   onLogin: (username: string) => void;
+  onAdminLogin: () => void;
 }
 
-const Login = ({ onLogin }: LoginProps) => {
+const Login = ({ onLogin, onAdminLogin }: LoginProps) => {
   const [username, setUsername] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim()) {
-      onLogin(username.trim());
+      // Check for admin login
+      if (username.trim().toLowerCase() === "admin" || username.trim().toLowerCase() === "admin@waterwise.com") {
+        onAdminLogin();
+      } else {
+        onLogin(username.trim());
+      }
     }
   };
 
@@ -60,6 +66,9 @@ const Login = ({ onLogin }: LoginProps) => {
           
           <div className="mt-6 text-center text-sm text-muted-foreground">
             <p>Learn about the water footprint of everyday items</p>
+            <p className="mt-2 text-xs">
+              💡 Admin access: Enter "admin" or "admin@waterwise.com"
+            </p>
           </div>
         </CardContent>
       </Card>
